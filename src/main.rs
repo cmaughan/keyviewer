@@ -71,8 +71,8 @@ fn primary_monitor_rect() -> (f32, f32, f32, f32) {
             let work  = info.rcWork;
             let mon_w = (work.right  - work.left) as f32;
             let mon_h = (work.bottom - work.top)  as f32;
-            let win_w = mon_w * 0.90;
-            let win_h = mon_h * 0.90;
+            let win_w = mon_w * 0.95;
+            let win_h = mon_h * 0.95;
             let x = work.left as f32 + (mon_w - win_w) / 2.0;
             let y = work.top  as f32 + (mon_h - win_h) / 2.0;
             return (x, y, win_w, win_h);

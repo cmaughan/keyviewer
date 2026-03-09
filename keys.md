@@ -3,25 +3,29 @@
 
 ## Prefix & Config
 - `Ctrl-s r` - Reload tmux config
-- `Ctrl-s |` - Split pane horizontal
-- `Ctrl-s -` - Split pane vertical
-- `Ctrl-s c` - New window (keep path)
-- `Ctrl-s n` - Next window
-- `Ctrl-s p` - Previous window
-- `Ctrl-s <` - Swap window left
-- `Ctrl-s >` - Swap window right
+- `Ctrl-s ?` - Show all keybindings
+- `Ctrl-s :` - Command prompt
+- `Ctrl-s ]` - Paste from buffer
+- `Ctrl-s t` - Show clock
 
-## Pane Navigation
+## Panes
 - `Ctrl-s h` - Select left pane
 - `Ctrl-s j` - Select down pane
 - `Ctrl-s k` - Select up pane
 - `Ctrl-s l` - Select right pane
-
-## Pane Resize
 - `Ctrl-s H` - Resize left
 - `Ctrl-s J` - Resize down
 - `Ctrl-s K` - Resize up
 - `Ctrl-s L` - Resize right
+- `Ctrl-s z` - Zoom pane (fullscreen)
+- `Ctrl-s q` - Show pane numbers
+- `Ctrl-s x` - Kill pane
+- `Ctrl-s o` - Cycle to next pane
+- `Ctrl-s ;` - Last active pane
+- `Ctrl-s {` - Swap pane left
+- `Ctrl-s }` - Swap pane right
+- `Ctrl-s Space` - Cycle pane layouts
+- `Ctrl-s !` - Break pane into window
 
 ## Copy Mode (vi)
 - `Ctrl-s Enter` - Enter copy mode
@@ -44,30 +48,20 @@
 - `Ctrl-s (` - Previous session
 - `Ctrl-s )` - Next session
 
-## Windows (built-in)
+## Windows
+- `Ctrl-s |` - Split pane horizontal
+- `Ctrl-s -` - Split pane vertical
+- `Ctrl-s c` - New window (keep path)
+- `Ctrl-s n` - Next window
+- `Ctrl-s p` - Previous window
+- `Ctrl-s <` - Swap window left
+- `Ctrl-s >` - Swap window right
 - `Ctrl-s w` - Choose window (interactive)
 - `Ctrl-s f` - Find window by name
 - `Ctrl-s ,` - Rename window
 - `Ctrl-s &` - Kill window
 - `Ctrl-s .` - Move/renumber window
 - `Ctrl-s 0-9` - Jump to window by index
-
-## Panes (built-in)
-- `Ctrl-s z` - Zoom pane (toggle fullscreen)
-- `Ctrl-s q` - Show pane numbers
-- `Ctrl-s x` - Kill pane
-- `Ctrl-s o` - Cycle to next pane
-- `Ctrl-s ;` - Last active pane
-- `Ctrl-s {` - Swap pane left
-- `Ctrl-s }` - Swap pane right
-- `Ctrl-s Space` - Cycle pane layouts
-- `Ctrl-s !` - Break pane into new window
-
-## Misc (built-in)
-- `Ctrl-s ?` - Show all keybindings
-- `Ctrl-s :` - Command prompt
-- `Ctrl-s ]` - Paste from buffer
-- `Ctrl-s t` - Show clock
 - `Ctrl-s i` - Window info
 
 # Neovim
@@ -192,9 +186,7 @@
 - `,ko` - Switch source/header (Clangd)
 - `jk` - Escape (insert mode)
 
-# Neovim Completion
-
-## nvim-cmp (Insert Mode)
+## Completion (nvim-cmp insert mode)
 - `Ctrl-n` - Next suggestion
 - `Ctrl-p` - Previous suggestion
 - `Ctrl-Space` - Trigger complete
@@ -207,8 +199,73 @@
 - `Ctrl-j` - Next / expand snippet
 - `Ctrl-k` - Prev / jump snippet back
 
-# Neovim GUI
-
-## Font Size (GUI only)
+## GUI (Font Size)
 - `Ctrl-=` - Increase font size
 - `Ctrl--` - Decrease font size
+
+# Tooling (from nvim repo)
+
+## ripgrep (rg)
+- `rg "<pattern>"` - Search recursively with smart defaults
+- `rg -n "<pattern>"` - Search with line numbers
+- `rg --files` - List files tracked by ripgrep
+- `rg -g "*.lua" "<p>"` - Search only Lua files
+- `rg -uu "<pattern>"` - Include hidden and ignored files
+
+## fd
+- `fd <name>` - Fast filename search
+- `fd -e lua` - Find Lua files
+- `fd -t f <name>` - Find files by name
+- `fd --hidden` - Include hidden files (exclude `.git` as needed)
+
+## fzf
+- `fzf` - Interactive fuzzy picker
+- `fd -t f | fzf` - Fuzzy-find files from fd output
+- `rg -n "<p>" | fzf` - Fuzzy-pick grep matches
+- `Ctrl-t` - PSFzf file/dir completion chord
+- `Ctrl-r` - PSFzf reverse history search chord
+
+## git
+- `git status -sb` - Short status with branch info
+- `git diff` - Show unstaged changes
+- `git log --oneline` - Compact recent history
+- `git grep "<pattern>"` - Search tracked files quickly
+
+## Mason + LSP
+- `:Mason` - Open Mason package manager UI
+- `:MasonInstall <lsps>` - Install configured LSP servers
+- `:LspInfo` - Show active LSP clients
+- `:checkhealth` - Run Neovim health checks
+
+## eza
+- `eza` - Modern ls output
+- `eza -lah` - Long listing with hidden files
+- `eza -T -L 2` - Two-level tree view
+
+## bat
+- `bat <file>` - Syntax-highlighted file viewer
+- `bat -n <file>` - Show line numbers
+- `bat --style=plain` - Plain cat-like output
+
+## zoxide
+- `z <query>` - Jump to most-used matching directory
+- `zi <query>` - Interactive jump using fzf
+- `z <a> <b>` - Jump using multiple match terms
+
+## pyenv
+- `pyenv versions` - List installed Python versions
+- `pyenv install <ver>` - Install Python version
+- `pyenv global <ver>` - Set global Python version
+
+## Node / npm provider
+- `npm i -g neovim` - Install Neovim Node provider
+- `npm ls -g --depth=0` - List globally installed npm packages
+- `:checkhealth provider` - Verify Node provider inside Neovim
+
+## psmux (Windows)
+- `psmux` - Start tmux-compatible multiplexer
+- `tmux` - Alias provided by psmux for tmux muscle memory
+- `Prefix + I` - Install/update psmux plugins (ppm)
+
+## btop
+- `btop` - Interactive system monitor (CPU/RAM/disk/network)
