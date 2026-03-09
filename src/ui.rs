@@ -17,6 +17,8 @@ const RULE_COLOR: Color32  = Color32::from_rgb(68, 71, 90);       // Current Lin
 const HINT_COLOR: Color32  = Color32::from_rgb(98, 114, 164);     // Comment
 const CONTENT_MAX_WIDTH: f32 = 1560.0;
 const CONTENT_SIDE_PADDING: f32 = 12.0;
+const LINE_SCROLL_STEP: f32 = 36.0;
+const PAGE_SCROLL_FACTOR: f32 = 0.85;
 
 // ── App ─────────────────────────────────────────────────────────────────────
 
@@ -52,9 +54,14 @@ fn render(ctx: &egui::Context, sections: &[Section]) {
         .frame(egui::Frame::new().fill(BG).inner_margin(egui::Margin::same(6)))
         .show(ctx, |ui| {
             render_header(ui);
+            let keyboard_scroll = keyboard_scroll_delta(ctx, ui.available_height());
             egui::ScrollArea::vertical()
                 .auto_shrink([false; 2])
                 .show(ui, |ui| {
+                    if keyboard_scroll != 0.0 {
+                        ui.scroll_with_delta(Vec2::new(0.0, keyboard_scroll));
+                        ctx.request_repaint();
+                    }
                     ui.add_space(6.0);
                     ui.horizontal(|ui| {
                         let available = ui.available_width();
@@ -85,6 +92,26 @@ fn render(ctx: &egui::Context, sections: &[Section]) {
                 });
             draw_side_borders(ui, RULE_COLOR);
         });
+}
+
+fn keyboard_scroll_delta(ctx: &egui::Context, available_height: f32) -> f32 {
+    let page_step = (available_height * PAGE_SCROLL_FACTOR).max(LINE_SCROLL_STEP * 4.0);
+    ctx.input(|i| {
+        let mut delta = 0.0;
+        if i.key_down(egui::Key::ArrowDown) {
+            delta += LINE_SCROLL_STEP;
+        }
+        if i.key_down(egui::Key::ArrowUp) {
+            delta -= LINE_SCROLL_STEP;
+        }
+        if i.key_down(egui::Key::PageDown) {
+            delta += page_step;
+        }
+        if i.key_down(egui::Key::PageUp) {
+            delta -= page_step;
+        }
+        delta
+    })
 }
 
 fn draw_side_borders(ui: &mut egui::Ui, color: Color32) {
