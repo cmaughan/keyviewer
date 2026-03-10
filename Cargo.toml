@@ -14,5 +14,5 @@ windows-sys = { version = "0.59", features = ["Win32_UI_WindowsAndMessaging", "W
 opt-level = 2
 
 [[bin]]
-name = "keyviewer"
+name = "kv"
 path = "src/main.rs"
