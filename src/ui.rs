@@ -106,6 +106,7 @@ fn keyboard_scroll_delta(ctx: &egui::Context, available_height: f32) -> f32 {
         }
         if i.key_down(egui::Key::PageDown)
             || (i.modifiers.ctrl && i.key_pressed(egui::Key::V))
+            || (i.modifiers.ctrl && i.key_pressed(egui::Key::F))
         {
             delta -= page_step;
         }

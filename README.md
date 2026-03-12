@@ -1,6 +1,6 @@
 # KeyViewer
 
-A minimal, single-shot keyboard shortcut viewer for Windows. Launch it, glance at your keybindings, press **Escape** to close.
+A minimal, single-shot keyboard shortcut viewer. Launch it, glance at your keybindings, press **Escape** to close.
 Vibe the keymap with Claude; just tell it where your configs are, have it build.  Instant personal key chart.
 
 ![KeyViewer screenshot](screenshot.png)
@@ -11,12 +11,21 @@ KeyViewer reads a simple markdown file (`keys.md`) listing your keyboard shortcu
 
 - **One-shot**: opens, shows your keybindings, closes when you press Escape. No background process, no tray icon.
 - **Always on top**: appears over your current workspace so you don't lose context.
-- **Single instance**: launching a second copy closes the first.
+- **Single instance on Windows**: launching a second copy closes the first.
 - **Fast**: native Rust + egui, starts in milliseconds.
 
 ## The keybindings file
 
-KeyViewer reads `keys.md` from the same directory as the executable (falls back to the current working directory). The format is simple markdown:
+KeyViewer ships with a built-in `keys.md` compiled into the binary.
+
+On startup it:
+
+1. Looks for `keys.md` next to the executable.
+2. Uses that local file if it exists.
+3. Writes out the built-in default if no local file is present.
+4. Falls back to `keys.md` in the current working directory only if the executable path can't be resolved.
+
+That means a custom `keys.md` beside the installed binary overrides the built-in keymap. The format is simple markdown:
 
 ```markdown
 # Section Name
@@ -64,26 +73,53 @@ Categories are laid out in a 4-column grid within each section.
 cargo build --release
 ```
 
-The binary is at `target/release/keyviewer.exe`. Copy it alongside your `keys.md` wherever you like.
+The binary is at `target/release/kv.exe` on Windows and `target/release/kv` on macOS/Linux.
 
 ## Usage
 
 ```
-keyviewer.exe
+cargo install --path .
+kv
 ```
 
 Press **Escape** to close.
 
-### Windows hotkey tip
+If you don't want to install it, you can also run the built binary directly:
 
-To launch KeyViewer with a global hotkey:
+```powershell
+.\target\release\kv.exe
+```
 
-1. Create a shortcut to `keyviewer.exe`
-2. Right-click the shortcut, select **Properties**
-3. Click the **Shortcut key** field and press your preferred key combo (e.g. `Ctrl+Shift+K`)
-4. Place the shortcut in your Start Menu or desktop
+```bash
+./target/release/kv
+```
 
-Since KeyViewer auto-closes any existing instance on launch, pressing the hotkey again will refresh and re-show the overlay.
+## Quick launch shortcuts
+
+### Windows: PowerToys Keyboard Manager
+
+If you use Microsoft PowerToys, you can bind a global shortcut directly to KeyViewer:
+
+1. Open **PowerToys** and enable **Keyboard Manager**.
+2. Open **Remap a shortcut**.
+3. Pick the shortcut you want to use.
+4. Set the action to **Start App**.
+5. Point it at your `kv.exe` path, for example `%USERPROFILE%\.cargo\bin\kv.exe` if you installed with Cargo.
+6. Set **Start in** to the folder containing `kv.exe`.
+
+This gives you a launcher chord without needing a separate `.lnk` file.
+
+### macOS: Shortcuts.app
+
+The built-in macOS way to do this is with the **Shortcuts** app:
+
+1. Create a shortcut that launches KeyViewer.
+2. If you have an app bundle, use **Open App**.
+3. If you installed the Cargo binary, use **Run Shell Script** and call the full path, for example `$HOME/.cargo/bin/kv`.
+4. Open the shortcut details and click **Add Keyboard Shortcut**.
+5. Press the key combo you want to use.
+
+After that, the shortcut can launch KeyViewer globally from the keyboard.
 
 ## Generating your keybindings file with Claude
 
