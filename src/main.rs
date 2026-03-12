@@ -41,10 +41,16 @@ fn main() {
     .expect("eframe failed");
 }
 
+const DEFAULT_KEYS_MD: &str = include_str!("../keys.md");
+
 fn find_keys_file() -> std::path::PathBuf {
     if let Ok(mut p) = std::env::current_exe() {
         p.pop();
         p.push("keys.md");
+        if !p.exists() {
+            // First run after install: extract the bundled default
+            let _ = std::fs::write(&p, DEFAULT_KEYS_MD);
+        }
         if p.exists() { return p; }
     }
     std::path::PathBuf::from("keys.md")
