@@ -98,16 +98,20 @@ fn keyboard_scroll_delta(ctx: &egui::Context, available_height: f32) -> f32 {
     let page_step = (available_height * PAGE_SCROLL_FACTOR).max(LINE_SCROLL_STEP * 4.0);
     ctx.input(|i| {
         let mut delta = 0.0;
-        if i.key_down(egui::Key::ArrowDown) {
+        if i.key_down(egui::Key::ArrowDown) || i.key_down(egui::Key::J) {
             delta -= LINE_SCROLL_STEP;
         }
-        if i.key_down(egui::Key::ArrowUp) {
+        if i.key_down(egui::Key::ArrowUp) || i.key_down(egui::Key::K) {
             delta += LINE_SCROLL_STEP;
         }
-        if i.key_down(egui::Key::PageDown) {
+        if i.key_down(egui::Key::PageDown)
+            || (i.modifiers.ctrl && i.key_pressed(egui::Key::V))
+        {
             delta -= page_step;
         }
-        if i.key_down(egui::Key::PageUp) {
+        if i.key_down(egui::Key::PageUp)
+            || (i.modifiers.ctrl && i.key_pressed(egui::Key::B))
+        {
             delta += page_step;
         }
         delta
