@@ -68,27 +68,28 @@
 <!-- leader: , -->
 
 ## Files & Buffers
-- `Ctrl-t` - Toggle NvimTree
-- `-` - Open Mini Files
+- `-` - Open Mini Files (at current file)
+- `Ctrl-t` - Toggle Mini Files
 - `Ctrl-p` - Find files (Telescope)
 - `,<space>` - Find open buffers
 - `,?` - Recently opened files
 - `,/` - Fuzzy search in buffer
-- `,jr` - Set tree root to cwd
 
 ## Find (Telescope)
 - `,ff` - Find files
-- `,fg` - Grep (project)
-- `,fr` - Grep (git root)
+- `,fg` - Live grep (project)
+- `,fr` - Live grep (git root)
 - `,fw` - Find word under cursor
-- `,fo` - Find in open files
+- `,fo` - Grep in open files
 - `,fb` - Find buffers
 - `,fd` - Find diagnostics
 - `,fh` - Find help tags
 - `,fi` - Find files in git
 - `,fa` - Resume last search
 - `,fs` - Select telescope picker
-- `,fj` - Hop word jump
+- `,ft` - Find todo comments
+- `,fu` - Find undo history
+- `,fA` - Find symbol via Aerial
 
 ## Harpoon
 - `,ha` - Add file to harpoon
@@ -97,39 +98,100 @@
 - `,h2` - Harpoon file 2
 - `,h3` - Harpoon file 3
 - `,h4` - Harpoon file 4
+- `,h5` - Harpoon file 5
+- `,h6` - Harpoon file 6
+- `,h7` - Harpoon file 7
+- `,h8` - Harpoon file 8
+- `,h9` - Harpoon file 9
 
 ## Go To (LSP)
 - `gd` - Go to definition
 - `gD` - Go to type definition
 - `gr` - Go to references
 - `gm` - Go to implementation
-- `gi` - Incoming calls
-- `gu` - Outgoing calls
-- `ge` - Go to error
-- `gs` - Go to symbols (workspace)
+- `gs` - Document symbols
+- `gS` - Workspace symbols
+- `ge` - Go to error (float)
+- `K` - Hover docs
+- `gK` - Signature help
 
 ## LSP Actions
-- `K` - Signature help
-- `,K` - Hover docs
-- `,rn` - Rename symbol
-- `,ca` - Code action
+- `,la` - Code action
+- `,lr` - Rename symbol
+- `,li` - Incoming calls
+- `,lu` - Outgoing calls
 - `,lf` - Format buffer
-- `,ds` - Document symbols
-- `,ws` - Workspace symbols
+- `,ll` - Lint buffer
+- `,ld` - Diagnostics to quickfix
+- `,lh` - Rust: hover actions
+- `,lo` - Switch source/header (Clangd)
+
+## Gitsigns
+- `]h` - Next git hunk
+- `[h` - Previous git hunk
+- `,gs` - Stage hunk
+- `,gu` - Undo stage hunk
+- `,gp` - Preview hunk
+- `,gd` - Diff this
+- `,gb` - Toggle line blame
+
+## Aerial (Symbol Outline)
+- `,a` - Toggle aerial panel
+- `{` - Previous symbol
+- `}` - Next symbol
+
+## Folds (nvim-ufo)
+- `zR` - Open all folds
+- `zM` - Close all folds
+- `zK` - Peek fold under cursor
+
+## Trouble (Diagnostics)
+- `,xx` - Buffer diagnostics
+- `,xX` - Workspace diagnostics
+- `,xq` - Quickfix list (Trouble)
+
+## Search & Replace (grug-far)
+- `,sr` - Search & replace (project)
+- `,sw` - Search word under cursor
+
+## CopilotChat
+- `,cc` - Toggle CopilotChat
+- `,ce` - Explain selection
+- `,cr` - Review selection
+- `,cf` - Fix selection
+
+## Obsidian
+- `,of` - Find note
+- `,og` - Grep notes
+- `,on` - New note
+- `,od` - Daily notes
+- `,ob` - Backlinks
+- `,ot` - Tags
+- `,ol` - Follow link
+
+## Todo Comments
+- `]t` - Next todo
+- `[t` - Previous todo
 
 ## Splits & Windows
 - `,sv` - Split vertical
 - `,sh` - Split horizontal
 - `,se` - Equalize splits
 - `,sx` - Close split
-- `,sj` - Shorter (height)
-- `,sk` - Taller (height)
-- `,sl` - Wider (width)
-- `,ws` - Swap windows
-- `,vh` - Vertical - horizontal
-- `,hv` - Horizontal - vertical
+- `,sJ` - Shorter (height)
+- `,sK` - Taller (height)
+- `,sL` - Wider (width)
+- `,sH` - Narrower (width)
+- `,vh` - Vertical to horizontal
+- `,hv` - Horizontal to vertical
 
-## Pane Navigation
+## Window Swap (smart-splits)
+- `,wh` - Swap buffer left
+- `,wj` - Swap buffer down
+- `,wk` - Swap buffer up
+- `,wl` - Swap buffer right
+
+## Pane Navigation (tmux-aware)
 - `Ctrl-h` - Move to left pane
 - `Ctrl-j` - Move to down pane
 - `Ctrl-k` - Move to up pane
@@ -141,11 +203,11 @@
 - `Ctrl-d` - Half page down (centered)
 - `Ctrl-u` - Half page up (centered)
 - `Ctrl-f` - Page forward (centered)
-- `Ctrl-b` - Page back (centered)
 - `n` - Next search (centered)
 - `N` - Prev search (centered)
 - `s` - Leap forward
 - `S` - Leap backward
+- `J` - Append line to current (keep cursor)
 - `J` - Move selection down (visual)
 - `K` - Move selection up (visual)
 
@@ -153,13 +215,12 @@
 - `Ctrl-\` - Open terminal split
 - `jk` - Exit terminal mode
 - `Esc` - Exit terminal mode
+- `Ctrl-o` - Exit terminal (keep jump list)
 
-## Debug (DAP)
-- `F5` - Continue
-- `F10` - Step over
-- `F11` - Step into
-- `,db` - Toggle breakpoint
-- `,dx` - Terminate debugger
+## Session
+- `,ps` - Save session
+- `,pr` - Restore session
+- `,px` - Delete session
 
 ## Testing
 - `,tn` - Test nearest
@@ -180,11 +241,11 @@
 
 ## Misc
 - `,z` - Toggle Zen mode
-- `,oc` - Clear search highlight
+- `,cs` - Clear search highlight
 - `,os` - Toggle scratch buffer
 - `,m` - Copy messages
-- `,ko` - Switch source/header (Clangd)
 - `jk` - Escape (insert mode)
+- `,p` - Paste over selection (visual, keep clipboard)
 
 ## Completion (nvim-cmp insert mode)
 - `Ctrl-n` - Next suggestion
@@ -198,6 +259,12 @@
 - `Ctrl-f` - Scroll docs down
 - `Ctrl-j` - Next / expand snippet
 - `Ctrl-k` - Prev / jump snippet back
+
+## Surround (nvim-surround)
+- `ys{motion}{char}` - Add surround
+- `cs{old}{new}` - Change surround
+- `ds{char}` - Delete surround
+- `S{char}` - Surround selection (visual)
 
 ## GUI (Font Size)
 - `Ctrl-=` - Increase font size
