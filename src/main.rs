@@ -17,16 +17,19 @@ fn main() {
     #[cfg(windows)]
     close_existing_keyviewer();
 
-    let (x, y, w, h) = primary_monitor_rect();
+    let (pos, w, h) = primary_monitor_rect();
+    let mut viewport = egui::ViewportBuilder::default()
+        .with_title("KeyViewer")
+        .with_decorations(false)
+        .with_resizable(false)
+        .with_always_on_top()
+        .with_inner_size([w, h]);
+    if let Some((x, y)) = pos {
+        viewport = viewport.with_position([x, y]);
+    }
     let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default()
-            .with_title("KeyViewer")
-            .with_decorations(false)
-            .with_resizable(false)
-            .with_always_on_top()
-            .with_inner_size([w, h])
-            .with_position([x, y]),
-        centered: false,
+        viewport,
+        centered: pos.is_none(),
         ..Default::default()
     };
 
@@ -56,7 +59,7 @@ fn find_keys_file() -> std::path::PathBuf {
     std::path::PathBuf::from("keys.md")
 }
 
-fn primary_monitor_rect() -> (f32, f32, f32, f32) {
+fn primary_monitor_rect() -> (Option<(f32, f32)>, f32, f32) {
     #[cfg(windows)]
     {
         use windows_sys::Win32::{
@@ -81,11 +84,20 @@ fn primary_monitor_rect() -> (f32, f32, f32, f32) {
             let win_h = mon_h * 0.95;
             let x = work.left as f32 + (mon_w - win_w) / 2.0;
             let y = work.top  as f32 + (mon_h - win_h) / 2.0;
-            return (x, y, win_w, win_h);
+            return (Some((x, y)), win_w, win_h);
         }
     }
+    #[cfg(target_os = "macos")]
+    {
+        use core_graphics::display::CGDisplay;
+        let bounds = CGDisplay::main().bounds();
+        let mon_w = bounds.size.width as f32;
+        let mon_h = bounds.size.height as f32;
+        return (None, mon_w * 0.90, mon_h * 0.90);
+    }
+    // Fallback for Linux etc. — let eframe center the window
     #[allow(unreachable_code)]
-    (72.0, 54.0, 1296.0, 972.0)
+    (None, 1296.0, 972.0)
 }
 
 fn apply_theme(ctx: &egui::Context) {

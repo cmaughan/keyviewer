@@ -1677,6 +1677,7 @@ dependencies = [
 name = "keyviewer"
 version = "0.1.0"
 dependencies = [
+ "core-graphics",
  "eframe",
  "egui",
  "windows-sys 0.59.0",
